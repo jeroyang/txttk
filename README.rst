@@ -1,5 +1,5 @@
 ===============================
-txttk
+Text Toolkit: txttk
 ===============================
 
 .. image:: https://img.shields.io/travis/jeroyang/txttk.svg
@@ -16,5 +16,7 @@ Text Toolkit: manipulate text  & regular expression
 
 Features
 --------
+* NLP tools
+* RE tools
 
 * TODO
