@@ -26,6 +26,7 @@ test_requirements = [
 setup(
     name='txttk',
     version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass()
     description="Text Toolkit: manipulate text  & regular expression",
     long_description=readme + '\n\n' + history,
     author="Chia-Jung, Yang",
