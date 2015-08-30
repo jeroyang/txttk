@@ -10,10 +10,16 @@ from itertools import chain, combinations, cycle, islice
 from collections import namedtuple
 
 def sent_tokenize(context):
-    """Cut the given context into sentences. 
-    Avoid a linebreak in between paried symbols, float numbers, and some abbr.
-    Nothint will be discard after sent_tokeinze, simply ''.join(sents) will get the original context.
-    Evey whitespace, tab, linebreak will be kept."""
+    """
+    | Cut the given context into sentences. 
+    | Avoid a linebreak in between paried symbols, float numbers, and some abbr. 
+    | Nothint will be discard after sent_tokeinze, simply ''.join(sents) will get the original context.
+    | Evey whitespace, tab, linebreak will be kept.
+
+    >>> context = 'I love you. Please don\'t leave.'
+    >>> sent_tokenize(context)
+    ['I love you. , "Please don't leave."]
+    """
     
     # Define the regular expression
     paired_symbols = [("(", ")"),
@@ -39,16 +45,37 @@ def sent_tokenize(context):
     return [r for r in result.split('###linebreak###') if r is not '']
 
 def sent_count(context):
+    """
+    Return the sentence counts for given context
+
+    >>> context = 'I love you. Please don\'t leave.'
+    >>> sent_count(context)
+    2
+    """
     return len(sent_tokenize(context))
 
 def clause_tokenize(sentence):
-    """Split on comma or parenthesis, if there are more then three words for each clause"""
+    """
+    Split on comma or parenthesis, if there are more then three words for each clause
+
+    >>> context = 'While I was walking home, this bird fell down in front of me.'
+    >>> clause_tokenize(context)
+    ['While I was walking home,', ' this bird fell down in front of me.']
+
+    """
     clause_re = re.compile(r'((?:\S+\s){2,}\S+,|(?:\S+\s){3,}(?=\((?:\S+\s){2,}\S+\)))')
     clause_stem = clause_re.sub(r'\1###clausebreak###', sentence)
     return [c for c in clause_stem.split('###clausebreak###') if c != '']
 
 def word_tokenize(sentence):
-    """Cut the sentence in into tokens without deleting anything"""
+    """
+    A generator which yields tokens based on the given sentence without deleting anything.
+
+    >>> context = 'I love you. Please don\'t leave.'
+    >>> list(word_tokenize(context))
+    ['I', ' ', 'love', ' ', 'you', '.', ' ', 'Please', ' ', 'don', "'", 't', ' ', 'leave', '.']
+
+    """
     number_pattern = r'[\+-]?(\d+\.\d+|\d)'
     arr_pattern = r'(?: \w\.){2,3}|(?:\A|\s)(?:\w\.){2,3}|[A-Z]\. [a-z]'
     word_pattern = r'[\w]+'.format(re.escape('!"#$%&()*,./:;<=>?@[\]^_-`{|}~'))
@@ -61,7 +88,14 @@ def word_tokenize(sentence):
         yield match.group(0)
 
 def slim_stem(token):
-    """A very simple stemmer, for entity of GO stemming"""
+    """
+    A very simple stemmer, for entity of GO stemming.
+
+    >>> token = 'interaction'
+    >>> slim_stem(token)
+    'interact'
+
+    """
     target_sulfixs = ['ic', 'tic', 'e', 'ive', 'ing', 'ical', 'nal', 'al', 'ism', 'ion', 'ation', 'ar', 'sis', 'us', 'ment']
     for sulfix in sorted(target_sulfixs, key=len, reverse=True):
         if token.endswith(sulfix):

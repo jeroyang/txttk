@@ -11,7 +11,7 @@ def condense(ss_unescaped):
     """
     Given multiple strings, returns a compressed regular expression just
     for these strings
-    Usage: 
+
     >>> condense(['she', 'he', 'her', 'hemoglobin'])
     'he(moglobin|r)?|she'
     """
