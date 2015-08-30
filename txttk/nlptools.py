@@ -103,18 +103,24 @@ def slim_stem(token):
     return token  
 
 def powerset(iterable):
-    "powerset([1,2,3]) --> () (1,) (2,) (3,) (1,2) (1,3) (2,3) (1,2,3)"
+    """
+    powerset([1,2,3]) --> () (1,) (2,) (3,) (1,2) (1,3) (2,3) (1,2,3)
+    """
     s = list(iterable)
     return chain.from_iterable(combinations(s, r) for r in range(len(s)+1))
 
 def ngram(n, iter_tokens):
-    """Return a generator of n-gram from an iterable"""
+    """
+    Return a generator of n-gram from an iterable
+    """
     z = len(iter_tokens)
     return (iter_tokens[i:i+n] for i in range(z-n+1))
 
 def power_ngram(iter_tokens):
-    """Generate unigram, bigram, trigram ... and the max-gram,
-     different from powerset(), this function will not generate skipped combinations such as (1,3)"""
+    """
+    Generate unigram, bigram, trigram ... and the max-gram,
+    different from powerset(), this function will not generate skipped combinations such as (1,3)
+    """
     return chain.from_iterable(ngram(j, iter_tokens) for j in range(1, len(iter_tokens) + 1))
 
 

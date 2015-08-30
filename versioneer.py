@@ -364,7 +364,7 @@ def get_root():
     versioneer_py = os.path.join(root, "versioneer.py")
     if not (os.path.exists(setup_py) or os.path.exists(versioneer_py)):
         # allow 'python path/to/setup.py COMMAND'
-        root = os.path.dirname(os.path.realpath(os.path.abspath(sys.argv[0])))
+        root = os.path.dirname(os.path.realpath(__file__))
         setup_py = os.path.join(root, "setup.py")
         versioneer_py = os.path.join(root, "versioneer.py")
     if not (os.path.exists(setup_py) or os.path.exists(versioneer_py)):
