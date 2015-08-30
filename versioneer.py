@@ -417,6 +417,7 @@ def get_config_from_root(root):
     cfg.verbose = get(parser, "verbose")
     return cfg
 
+CFG = get_config_from_root(ROOT)
 
 class NotThisMethod(Exception):
     pass
@@ -1338,7 +1339,7 @@ def get_versions(verbose=False):
         del sys.modules["versioneer"]
 
     root = ROOT
-    cfg = get_config_from_root(root)
+    cfg = CFG
 
     assert cfg.VCS is not None, "please set [versioneer]VCS= in setup.cfg"
     handlers = HANDLERS.get(cfg.VCS)
