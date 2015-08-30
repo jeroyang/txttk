@@ -390,6 +390,7 @@ def get_root():
         pass
     return root
 
+ROOT = get_root()
 
 def get_config_from_root(root):
     # This might raise EnvironmentError (if setup.cfg is missing), or
@@ -1336,7 +1337,7 @@ def get_versions(verbose=False):
         # see the discussion in cmdclass.py:get_cmdclass()
         del sys.modules["versioneer"]
 
-    root = get_root()
+    root = ROOT
     cfg = get_config_from_root(root)
 
     assert cfg.VCS is not None, "please set [versioneer]VCS= in setup.cfg"
