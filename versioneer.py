@@ -364,7 +364,7 @@ def get_root():
     versioneer_py = os.path.join(root, "versioneer.py")
     if not (os.path.exists(setup_py) or os.path.exists(versioneer_py)):
         # allow 'python path/to/setup.py COMMAND'
-        root = os.path.dirname(os.path.realpath(__file__))
+        root = os.path.dirname(os.path.realpath(os.path.abspath(sys.argv[0])))
         setup_py = os.path.join(root, "setup.py")
         versioneer_py = os.path.join(root, "versioneer.py")
     if not (os.path.exists(setup_py) or os.path.exists(versioneer_py)):
@@ -372,8 +372,7 @@ def get_root():
                "Versioneer requires setup.py to be executed from "
                "its immediate directory (like 'python setup.py COMMAND'), "
                "or in a way that lets it use sys.argv[0] to find the root "
-               "(like 'python path/to/setup.py COMMAND')."
-               "### {}".format(root))
+               "(like 'python path/to/setup.py COMMAND').")
         raise VersioneerBadRootError(err)
     try:
         # Certain runtime workflows (setup.py install/develop in a setuptools
@@ -390,7 +389,6 @@ def get_root():
         pass
     return root
 
-ROOT = get_root()
 
 def get_config_from_root(root):
     # This might raise EnvironmentError (if setup.cfg is missing), or
@@ -417,7 +415,6 @@ def get_config_from_root(root):
     cfg.verbose = get(parser, "verbose")
     return cfg
 
-CFG = get_config_from_root(ROOT)
 
 class NotThisMethod(Exception):
     pass
@@ -1338,8 +1335,8 @@ def get_versions(verbose=False):
         # see the discussion in cmdclass.py:get_cmdclass()
         del sys.modules["versioneer"]
 
-    root = ROOT
-    cfg = CFG
+    root = get_root()
+    cfg = get_config_from_root(root)
 
     assert cfg.VCS is not None, "please set [versioneer]VCS= in setup.cfg"
     handlers = HANDLERS.get(cfg.VCS)
