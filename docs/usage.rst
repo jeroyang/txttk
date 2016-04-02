@@ -4,4 +4,5 @@ Usage
 
 To use txttk in a project::
 
-    import txttk
+    | from txttk import nlptools
+    | from txttk import retools
