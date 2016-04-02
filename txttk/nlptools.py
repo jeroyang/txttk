@@ -11,16 +11,16 @@ from collections import namedtuple
 
 def sent_tokenize(context):
     """
-    | Cut the given context into sentences. 
-    | Avoid a linebreak in between paried symbols, float numbers, and some abbr. 
-    | Nothint will be discard after sent_tokeinze, simply ''.join(sents) will get the original context.
-    | Evey whitespace, tab, linebreak will be kept.
+    Cut the given context into sentences.
+    Avoid a linebreak in between paried symbols, float numbers, and some abbrs.
+    Nothing will be discard after sent_tokeinze, simply ''.join(sents) will get the original context.
+    Evey whitespace, tab, linebreak will be kept.
 
-    >>> context = 'I love you. Please don\'t leave.'
+    >>> context = "I love you. Please don't leave."
     >>> sent_tokenize(context)
-    ['I love you. , "Please don't leave."]
+    ["I love you. ", "Please don't leave."]
     """
-    
+
     # Define the regular expression
     paired_symbols = [("(", ")"),
                   ("[", "]"),
@@ -28,15 +28,15 @@ def sent_tokenize(context):
     paired_patterns = ["%s.*?%s" % (re.escape(lt), re.escape(rt)) for lt, rt in paired_symbols]
     number_pattern = ['\d+\.\d+']
     arr_pattern = ['(?: \w\.){2,3}|(?:\A|\s)(?:\w\.){2,3}|[A-Z]\. [a-z]|\svs\. |et al\.|Fig\. \d|approx\.|(?:Prof|Dr)\. (?:[A-Z]\.)?']
-    
+
     # Find the string which matches the above pattern, and remove than from the context, to get a stem string
     escape_re = re.compile("|".join(paired_patterns + number_pattern + arr_pattern))
     escapes = escape_re.findall(context)
     escaped_stem = escape_re.sub('{}', context)
 
     escaped_escaped_stem = escaped_stem.replace('{','{{').replace('}', '}}')
-    
-    # Find the linebreaks 
+
+    # Find the linebreaks
     sent_re = re.compile(r'([A-Z0-9]..+?(?:[.!?]\s|[\n$]))')
     linebreaks = sent_re.findall(escaped_escaped_stem)
     sent_stem = sent_re.sub(r'\1###linebreak###', escaped_escaped_stem)
@@ -48,7 +48,7 @@ def sent_count(context):
     """
     Return the sentence counts for given context
 
-    >>> context = 'I love you. Please don\'t leave.'
+    >>> context = "I love you. Please don't leave."
     >>> sent_count(context)
     2
     """
@@ -71,7 +71,7 @@ def word_tokenize(sentence):
     """
     A generator which yields tokens based on the given sentence without deleting anything.
 
-    >>> context = 'I love you. Please don\'t leave.'
+    >>> context = "I love you. Please don't leave."
     >>> list(word_tokenize(context))
     ['I', ' ', 'love', ' ', 'you', '.', ' ', 'Please', ' ', 'don', "'", 't', ' ', 'leave', '.']
 
@@ -100,7 +100,7 @@ def slim_stem(token):
     for sulfix in sorted(target_sulfixs, key=len, reverse=True):
         if token.endswith(sulfix):
             return token[0:-len(sulfix)]
-    return token  
+    return token
 
 def powerset(iterable):
     """
@@ -122,5 +122,3 @@ def power_ngram(iter_tokens):
     different from powerset(), this function will not generate skipped combinations such as (1,3)
     """
     return chain.from_iterable(ngram(j, iter_tokens) for j in range(1, len(iter_tokens) + 1))
-
-
