@@ -75,6 +75,7 @@ def condense(ss_unescaped):
 def is_solid(regex):
     """
     Check the given regular expression is solid.
+
     >>> is_solid(r'a')
     True
     >>> is_solid(r'[ab]')
@@ -117,6 +118,7 @@ def consolidate(regex):
 def unpack(regex):
     """
     Remove the outermost parens
+
     >>> unpack(r'(abc)')
     'abc'
     >>> unpack(r'(?:abc)')
@@ -135,6 +137,7 @@ def unpack(regex):
 def merge(regex_list):
     """
     Join the given regexes using r'|'
+    
     >>> merge([r'abc', r'def'])
     'abc|def'
     >>> merge([r'abc', r'd|ef'])
