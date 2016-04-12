@@ -9,15 +9,12 @@ Text Toolkit: txttk
         :target: https://pypi.python.org/pypi/txttk
 
 
-Text Toolkit: manipulate text  & regular expression
-
-* Free software: BSD license
-* Documentation: https://txttk.readthedocs.org.
+Text Toolkit: manipulate text & regular expression
 
 Features
 --------
-* nlptools: Nature Language Processing tools, includes sentence tokenization, clause tokenization, word tokenization, stemming, n-gram, etc.
-* retools: Manipulate Regular Expression strings, currently has only one function which can build a nothing more and nothing less regular expression from give strings.  
+* nlptools: Nature Language Processing tools.
+* retools: Manipulate Regular Expression strings.
 
 Modules
 --------
@@ -25,3 +22,8 @@ Modules
 .. toctree::
 	nlptools
 	retools
+
+License
+---------
+* Free software: BSD license
+* Documentation: https://txttk.readthedocs.org.

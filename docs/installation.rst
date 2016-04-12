@@ -4,7 +4,7 @@ Installation
 
 At the command line::
 
-    $ easy_install txttk
+    $ pip txttk
 
 Or, if you have virtualenvwrapper installed::
 
