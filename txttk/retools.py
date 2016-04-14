@@ -157,8 +157,10 @@ def nocatch(regex):
     if the regex is not yet packed;
     modified the outmost parens by adding nocatch tag
     """
-    return '(?:{})'.format(unpack(regex))
-
+    if is_solid(regex) and not is_packed(regex):
+        return regex
+    else:
+        return '(?:{})'.format(unpack(regex))
 
 def concat(regex_list):
     """
@@ -181,3 +183,17 @@ def nocatchall(regex):
     Return a regex with all parens has a no catch tag
     """
     return re.sub(r'(?<!\\)(?P<leading>(\\\\)*)\((\?(:|P<.*?>))?', r'\g<leading>(?:', regex)
+
+def option(regex):
+    """
+    return a regex has a option tag
+
+    >>> option(r'[ab]')
+    '[ab]?'
+    >>> option(r'(abc)')
+    '(abc)?'
+    >>> option('abc')
+    '(abc)?'
+    """
+
+    return nocatch(regex) + '?'

@@ -124,6 +124,11 @@ class RetoolsTestCase(unittest.TestCase):
         result = retools.nocatch(regex)
         self.assertEqual(result, wanted)
 
+        regex = r'[ab]'
+        wanted = r'[ab]'
+        result = retools.nocatch(regex)
+        self.assertEqual(result, wanted)
+
     def test_concat(self):
         regex_1 = r'a|b'
         regex_2 = r'(c|de)'
@@ -170,4 +175,20 @@ class RetoolsTestCase(unittest.TestCase):
         regex = r'\(abc\)'
         wanted = r'\(abc\)'
         result = retools.nocatchall(regex)
+        self.assertEqual(result, wanted)
+
+    def test_option(self):
+        regex = r'abc'
+        wanted = r'(?:abc)?'
+        result = retools.option(regex)
+        self.assertEqual(result, wanted)
+
+        regex = r'(abc)'
+        wanted = r'(?:abc)?'
+        result = retools.option(regex)
+        self.assertEqual(result, wanted)
+
+        regex = r'[abc]'
+        wanted = r'[abc]?'
+        result = retools.option(regex)
         self.assertEqual(result, wanted)
