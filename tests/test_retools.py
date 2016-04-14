@@ -37,9 +37,15 @@ class RetoolsTestCase(unittest.TestCase):
         self.assertTrue(retools.is_solid(regex))
         regex = r'(a|b|c)'
         self.assertTrue(retools.is_solid(regex))
+        regex = r'(a|b|c)?'
+        self.assertTrue(retools.is_solid(regex))
         regex = r'(ab)c'
         self.assertFalse(retools.is_solid(regex))
+        regex = r'(ab)c?'
+        self.assertFalse(retools.is_solid(regex))
         regex = r'(a)(b|c)'
+        self.assertFalse(retools.is_solid(regex))
+        regex = r'(a)(b|c)?'
         self.assertFalse(retools.is_solid(regex))
 
     def test_is_packed(self):
@@ -165,4 +171,3 @@ class RetoolsTestCase(unittest.TestCase):
         wanted = r'\(abc\)'
         result = retools.nocatchall(regex)
         self.assertEqual(result, wanted)
-        

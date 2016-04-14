@@ -82,17 +82,21 @@ def is_solid(regex):
     True
     >>> is_solid(r'(a|b|c)')
     True
+    >>> is_solid(r'(a|b|c)?')
+    True
     >>> is_solid(r'(a|b)(c)')
+    False
+    >>> is_solid(r'(a|b)(c)?')
     False
     """
 
-    shape = re.sub(r'(\\.|[^\[\]\(\)\|])', '#', regex)
+    shape = re.sub(r'(\\.|[^\[\]\(\)\|\?\+\*])', '#', regex)
     skeleton = shape.replace('#', '')
     if len(shape) <= 1:
         return True
-    if re.match(r'^\[[^\]]*\]$', shape):
+    if re.match(r'^\[[^\]]*\][\*\+\?]?$', shape):
         return True
-    if re.match(r'^\([^\(]*\)$', shape):
+    if re.match(r'^\([^\(]*\)[\*\+\?]?$', shape):
         return True
     if re.match(r'^\(\)#*?\)\)', skeleton):
         return True
@@ -137,7 +141,7 @@ def unpack(regex):
 def merge(regex_list):
     """
     Join the given regexes using r'|'
-    
+
     >>> merge([r'abc', r'def'])
     'abc|def'
     >>> merge([r'abc', r'd|ef'])
