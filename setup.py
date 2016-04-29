@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import os
+import sys
 
 try:
     from setuptools import setup
@@ -9,8 +10,23 @@ except ImportError:
 
 import versioneer
 
-with open('README.rst') as readme_file:
-    readme = readme_file.read()
+with open('VERSION.rst') as f:
+    version = f.read().strip()
+with open('README.rst') as f:
+    readme = f.read()
+
+if sys.argv[-1] == 'publish':
+    os.system("python setup.py sdist upload")
+    os.system("python setup.py bdist_wheel upload")
+    sys.exit()
+
+if sys.argv[-1] == 'tag':
+    print('Current Tag: {}'.format(version))
+    tag = input('Set a new tag: ')
+    os.system("git tag -a %s -m 'version %s'" % (tag, tag))
+    os.system("git push --tags")
+    sys.exit()
+
 
 requirements = [
     # TODO: put package requirements here
