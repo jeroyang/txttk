@@ -84,3 +84,15 @@ These systems will be formally evaluated by users, but not competitively.""".spl
         self.assertEqual(list(nlptools.power_ngram(tokens)), \
             [['hello'], ['world'], ['kitty'], ['hello', 'world'], ['world', 'kitty'], ['hello', 'world', 'kitty']])
 
+    def test_count_start(self):
+        tokenizer = lambda sentence: sentence.split(' ')
+        sentence = 'The quick brown'
+        tokenizer = nlptools.count_start(tokenizer)
+        result = [start for token, start in tokenizer(sentence, 0)]
+        wanted = [0, 4, 10]
+        self.assertEqual(result, wanted)
+        
+        sentence = 'jumps over the'
+        result = [start for token, start in tokenizer(sentence, 16)]
+        wanted = [16, 22, 27]
+        self.assertEqual(result, wanted)

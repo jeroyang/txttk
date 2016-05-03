@@ -122,3 +122,30 @@ def power_ngram(iter_tokens):
     different from powerset(), this function will not generate skipped combinations such as (1,3)
     """
     return chain.from_iterable(ngram(j, iter_tokens) for j in range(1, len(iter_tokens) + 1))
+
+def count_start(tokenizer):
+    """
+    A decorator which wrap the given tokenizer to yield (token, start).
+    Notice! the decorated tokenizer must take a int arguments stands for the start position of the input context/sentence
+    
+    >>> tokenizer = lambda sentence: sentence.split(' ')
+    >>> tokenizer('The quick brown fox jumps over the lazy dog')
+    ['The', 'quick', 'brown', 'fox', 'jumps', 'over', 'the',
+    'lazy', 'dog']
+    >>> tokenizer = count_start(tokenizer)
+    >>> tokenizer('The quick brown fox jumps over the lazy dog', 0)
+    
+    ('The', 0)
+    ('quick', 4)
+    ...
+    """
+    def wrapper(context, base):
+        tokens = list(tokenizer(context))
+        flag = 0
+        for token in tokens:
+            start = context.index(token, flag)
+            flag = start + len(token)
+            yield (token, base + start)
+    
+    return wrapper
+    

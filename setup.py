@@ -10,8 +10,6 @@ except ImportError:
 
 import versioneer
 
-with open('VERSION.rst') as f:
-    version = f.read().strip()
 with open('README.rst') as f:
     readme = f.read()
 
