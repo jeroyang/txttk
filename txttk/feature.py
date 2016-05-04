@@ -6,6 +6,7 @@ from __future__ import (absolute_import, division,
 from builtins import *
 
 from collections import OrderedDict
+import re
 import string
 
 def lexical_features(token):
@@ -35,26 +36,42 @@ def _shape(token):
     return ''.join([_char_shape(char) for char in token])
 
 def _contains_a_letter(token):
-    shape = _shape(token)
-    return 'a' in shape.lower()
+    regex = r'[A-Za-z]'
+    if re.search(regex, token):
+        return True
+    else:
+        return False
     
 def _contains_a_capital(token):
-    shape = _shape(token)
-    return 'A' in shape
+    regex = r'[A-Z]'
+    if re.search(regex, token):
+        return True
+    else:
+        return False
 
 def _begins_with_capital(token):
     return _char_shape(token[0]) == 'A'
 
 def _all_capital(token):
-    return set(_shape(token)) == set('A')
+    regex = r'^[A-Z]+$'
+    if re.match(regex, token):
+        return True
+    else:
+        return False
 
 def _contains_a_digit(token):
-    shape = _shape(token)
-    return '0' in shape
+    regex = r'\d'
+    if re.search(regex, token):
+        return True
+    else:
+        return False
 
 def _all_digit(token):
-    shape = _shape(token)
-    return set(shape) == set('0')
+    regex = r'^\d+$'
+    if re.match(regex, token):
+        return True
+    else:
+        return False
 
 def _contains_a_punctuation(token):
     return len(set(string.punctuation) & set(token)) > 0
