@@ -63,7 +63,8 @@ These systems will be formally evaluated by users, but not competitively.""".spl
                        ('radar', 'rad'),
                        ('dialysis', 'dialy'),
                        ('status', 'stat'),
-                       ('measurement', 'measure')]
+                       ('measurement', 'measure'),
+                       ('signalling', 'signal')]
         for word, target in word2target:
             self.assertEqual(nlptools.slim_stem(word), target)
 
