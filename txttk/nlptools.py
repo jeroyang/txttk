@@ -99,11 +99,11 @@ def slim_stem(token):
     target_sulfixs = ['ic', 'tic', 'e', 'ive', 'ing', 'ical', 'nal', 'al', 'ism', 'ion', 'ation', 'ar', 'sis', 'us', 'ment']
     for sulfix in sorted(target_sulfixs, key=len, reverse=True):
         if token.endswith(sulfix):
-            new_token = token[0:-len(sulfix)]
+            token = token[0:-len(sulfix)]
             break
-    if new_token.endswith('ll'):
-        new_token = new_token[:-1]
-    return new_token
+    if token.endswith('ll'):
+        token = token[:-1]
+    return token
 
 def powerset(iterable):
     """
