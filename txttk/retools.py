@@ -156,15 +156,15 @@ def unpack(regex):
     else:
         return regex
 
-def merge(regex_list):
+def parallel(regex_list):
     """
     Join the given regexes using r'|'
 
-    >>> merge([r'abc', r'def'])
+    >>> parallel([r'abc', r'def'])
     'abc|def'
-    >>> merge([r'abc', r'd|ef'])
-    'abc|d|ef'
-    >>> merge([r'abc', r'(d|ef)'])
+    >>> parallel([r'abc', r'd|ef'])
+    'abc|def'
+    >>> parallel([r'abc', r'(d|ef)'])
     'abc|d|ef'
     """
     

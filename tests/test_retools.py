@@ -116,16 +116,16 @@ class RetoolsTestCase(unittest.TestCase):
         result = retools.unpack(regex)
         self.assertEqual(result, wanted)
 
-    def test_merge(self):
-        result = retools.merge([r'abc', r'def'])
+    def test_parallel(self):
+        result = retools.parallel([r'abc', r'def'])
         wanted = r'abc|def'
         self.assertEqual(result, wanted)
 
-        result = retools.merge([r'abc', r'd|ef'])
+        result = retools.parallel([r'abc', r'd|ef'])
         wanted = 'abc|d|ef'
         self.assertEqual(result, wanted)
 
-        result = retools.merge([r'abc', r'(d|ef)'])
+        result = retools.parallel([r'abc', r'(d|ef)'])
         wanted = 'abc|d|ef'
         self.assertEqual(result, wanted)
 
