@@ -119,7 +119,7 @@ def consolidate(regex):
     else:
         return '({})'.format(regex)
 
-def unpack(regex):
+def danger_unpack(regex):
     """
     Remove the outermost parens
 
@@ -138,6 +138,24 @@ def unpack(regex):
     else:
         return regex
 
+def unpack(regex):
+    """
+    Remove the outermost parens, keep the (?P...) one
+
+    >>> unpack(r'(abc)')
+    'abc'
+    >>> unpack(r'(?:abc)')
+    'abc'
+    >>> unpack(r'(?P<xyz>abc)')
+    '(?P<xyz>abc)'
+    >>> unpack(r'[abc]')
+    '[abc]'
+    """
+    if is_packed(regex) and not regex.startswith('(?P<'):
+        return re.sub(r'^\((\?:)?(?P<content>.*?)\)$', r'\g<content>', regex)
+    else:
+        return regex
+
 def merge(regex_list):
     """
     Join the given regexes using r'|'
@@ -149,6 +167,7 @@ def merge(regex_list):
     >>> merge([r'abc', r'(d|ef)'])
     'abc|d|ef'
     """
+    
     return '|'.join([unpack(regex) for regex in regex_list])
 
 def nocatch(regex):
@@ -160,7 +179,7 @@ def nocatch(regex):
     if is_solid(regex) and not is_packed(regex):
         return regex
     else:
-        return '(?:{})'.format(unpack(regex))
+        return '(?:{})'.format(danger_unpack(regex))
 
 def concat(regex_list):
     """

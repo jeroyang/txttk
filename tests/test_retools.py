@@ -74,6 +74,27 @@ class RetoolsTestCase(unittest.TestCase):
         result = retools.consolidate(regex)
         self.assertEqual(result, wanted)
 
+    def test_danger_unpack(self):
+        regex = r'(abc)'
+        wanted = r'abc'
+        result = retools.danger_unpack(regex)
+        self.assertEqual(result, wanted)
+
+        regex = r'(?:abc)'
+        wanted = r'abc'
+        result = retools.danger_unpack(regex)
+        self.assertEqual(result, wanted)
+
+        regex = r'(?P<xyz>abc)'
+        wanted = r'abc'
+        result = retools.danger_unpack(regex)
+        self.assertEqual(result, wanted)
+
+        regex = r'[abc]'
+        wanted = r'[abc]'
+        result = retools.danger_unpack(regex)
+        self.assertEqual(result, wanted)
+
     def test_unpack(self):
         regex = r'(abc)'
         wanted = r'abc'
@@ -86,7 +107,7 @@ class RetoolsTestCase(unittest.TestCase):
         self.assertEqual(result, wanted)
 
         regex = r'(?P<xyz>abc)'
-        wanted = r'abc'
+        wanted = r'(?P<xyz>abc)'
         result = retools.unpack(regex)
         self.assertEqual(result, wanted)
 
