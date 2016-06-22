@@ -76,13 +76,14 @@ def word_tokenize(sentence):
     ['I', ' ', 'love', ' ', 'you', '.', ' ', 'Please', ' ', 'don', "'", 't', ' ', 'leave', '.']
 
     """
-    number_pattern = r'[\+-]?(\d+\.\d+|\d)'
+    date_pattern = r'\d\d(\d\d)?[\\-]\d\d[\\-]\d\d(\d\d)?'
+    number_pattern = r'[\+-]?(\d+\.\d+|\d+)'
     arr_pattern = r'(?: \w\.){2,3}|(?:\A|\s)(?:\w\.){2,3}|[A-Z]\. [a-z]'
-    word_pattern = r'[\w]+'.format(re.escape('!"#$%&()*,./:;<=>?@[\]^_-`{|}~'))
+    word_pattern = r'[\w]+'
     non_space_pattern = r'[{}]|\w'.format(re.escape('!"#$%&()*,./:;<=>?@[\]^_-`{|}~'))
     space_pattern = r'\s'
     anything_pattern = r'.'
-    patterns = [number_pattern, arr_pattern, word_pattern, non_space_pattern, space_pattern, anything_pattern]
+    patterns = [date_pattern, number_pattern, arr_pattern, word_pattern, non_space_pattern, space_pattern, anything_pattern]
     big_pattern = r'|'.join([('(' + pattern + ')') for pattern in patterns])
     for match in re.finditer(big_pattern, sentence):
         yield match.group(0)

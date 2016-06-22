@@ -39,8 +39,8 @@ These systems will be formally evaluated by users, but not competitively.""".spl
         self.assertEqual(''.join(nlptools.clause_tokenize(self.sentences[1])), self.sentences[1])
 
     def test_word_tokenzie(self):
-        sentence = 'A 2.1 x 3.3 cm tumor arising from the tongue base (right side) is noted.'
-        wanted = ['A', ' ', '2.1', ' ', 'x', ' ', '3.3', ' ', 'cm', ' ', 'tumor', ' ', 'arising', ' ', 'from', ' ', 'the', ' ', 'tongue', ' ', 'base', ' ', '(', 'right', ' ', 'side', ')', ' ', 'is', ' ', 'noted', '.']
+        sentence = 'A 2.1 cm tumor (right tongue) noted on 2013-11-11.'
+        wanted = ['A', ' ', '2.1', ' ', 'cm', ' ', 'tumor', ' ', '(', 'right', ' ', 'tongue', ')', ' ', 'noted', ' ', 'on', ' ', '2013-11-11', '.']
         self.assertEqual(list(nlptools.word_tokenize(sentence)), wanted)
 
     def test_word_tokenize_intergration(self):
