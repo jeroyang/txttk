@@ -42,6 +42,11 @@ These systems will be formally evaluated by users, but not competitively.""".spl
         sentence = 'A 2.1 cm tumor (right tongue) noted on 2013-11-11.'
         wanted = ['A', ' ', '2.1', ' ', 'cm', ' ', 'tumor', ' ', '(', 'right', ' ', 'tongue', ')', ' ', 'noted', ' ', 'on', ' ', '2013-11-11', '.']
         self.assertEqual(list(nlptools.word_tokenize(sentence)), wanted)
+    
+    def test_word_tokenzie2(self):
+        sentence = '-999 1,234,000 3.1415'
+        wanted = ['-999', ' ', '1,234,000', ' ', '3.1415']
+        self.assertEqual(list(nlptools.word_tokenize(sentence)), wanted)
 
     def test_word_tokenize_intergration(self):
         for sent in self.sentences:

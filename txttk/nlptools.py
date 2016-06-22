@@ -77,7 +77,7 @@ def word_tokenize(sentence):
 
     """
     date_pattern = r'\d\d(\d\d)?[\\-]\d\d[\\-]\d\d(\d\d)?'
-    number_pattern = r'[\+-]?(\d+\.\d+|\d+)'
+    number_pattern = r'[\+-]?(\d+\.\d+|\d{1,3},(\d{3},)*\d{3}|\d+)'
     arr_pattern = r'(?: \w\.){2,3}|(?:\A|\s)(?:\w\.){2,3}|[A-Z]\. [a-z]'
     word_pattern = r'[\w]+'
     non_space_pattern = r'[{}]|\w'.format(re.escape('!"#$%&()*,./:;<=>?@[\]^_-`{|}~'))
