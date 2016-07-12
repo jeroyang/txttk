@@ -3,28 +3,18 @@
 import os
 import sys
 
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
-
-import versioneer
+from setuptools import setup
 
 with open('README.rst') as f:
     readme = f.read()
+
+with open('VERSION') as f:
+    version = f.read().strip()
 
 if sys.argv[-1] == 'publish':
     os.system("python setup.py sdist upload")
     os.system("python setup.py bdist_wheel upload")
     sys.exit()
-
-if sys.argv[-1] == 'tag':
-    print('Current Tag: {}'.format(version))
-    tag = input('Set a new tag: ')
-    os.system("git tag -a %s -m 'version %s'" % (tag, tag))
-    os.system("git push --tags")
-    sys.exit()
-
 
 requirements = [
     # TODO: put package requirements here
@@ -36,9 +26,8 @@ test_requirements = [
 
 setup(
     name='txttk',
-    version=versioneer.get_version(),
-    cmdclass=versioneer.get_cmdclass(),
-    description="Text Toolkit: manipulate text  & regular expression",
+    version=version,
+    description="Text Toolkit: manipulate text & regular expression",
     long_description=readme,
     author="Chia-Jung, Yang",
     author_email='jeroyang@gmail.com',

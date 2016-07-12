@@ -8,6 +8,5 @@ from builtins import *
 __author__ = 'Chia-Jung, Yang'
 __email__ = 'jeroyang@gmail.com'
 
-from ._version import get_versions
-__version__ = get_versions()['version']
-del get_versions
+with open('VERSION') as f:
+    __version__ = f.read().strip()
