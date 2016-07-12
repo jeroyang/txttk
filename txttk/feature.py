@@ -9,7 +9,7 @@ from collections import OrderedDict
 import re
 import string
 
-def lexical_features(token):
+def lexical(token):
     """
     Extract lexical features from given token
     """
@@ -85,7 +85,7 @@ def _consists_digits_n_punctuations(token):
     lower_shape = shape.lower()
     return set(lower_shape) <= set(string.punctuation+'0') and len(lower_shape) >= 2
     
-def orthographic_features(token):
+def orthographic(token):
     """
     Extract orthographic features from given token
     """

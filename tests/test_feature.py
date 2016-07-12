@@ -10,9 +10,9 @@ from collections import OrderedDict
 from txttk import feature
 
 class FeatureTestCase(unittest.TestCase):
-    def test_lexical_features(self):
+    def test_lexical(self):
         token = 'Hello'
-        result = feature.lexical_features(token)
+        result = feature.lexical(token)
         wanted = OrderedDict([
                 ('lowercase', 'hello'),
                 ('first4', 'hell'),
@@ -114,9 +114,9 @@ class FeatureTestCase(unittest.TestCase):
         result = feature._consists_digits_n_punctuations(token)
         self.assertFalse(result)
     
-    def test_orthographic_features(self):
+    def test_orthographic(self):
         token = 'JeroYang123'
-        result = feature.orthographic_features(token)
+        result = feature.orthographic(token)
         wanted = ['AaaaAaaa000',
                   11,
                   True,
