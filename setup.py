@@ -12,8 +12,7 @@ with open('VERSION') as f:
     version = f.read().strip()
 
 if sys.argv[-1] == 'publish':
-    os.system("python setup.py sdist upload")
-    os.system("python setup.py bdist_wheel upload")
+    os.system("python setup.py sdist bdist_wheel upload")
     sys.exit()
 
 requirements = [
