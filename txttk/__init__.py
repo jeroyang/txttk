@@ -10,5 +10,5 @@ from txttk import nlptools, retools, feature
 
 __author__ = 'Chia-Jung, Yang'
 __email__ = 'jeroyang@gmail.com'
-__version__ = '0.8.5'
+__version__ = '0.8.6'
 __all__ = ['feature', 'nlptools', 'retools']
