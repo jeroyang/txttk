@@ -10,9 +10,5 @@ from txttk import nlptools, retools, feature
 
 __author__ = 'Chia-Jung, Yang'
 __email__ = 'jeroyang@gmail.com'
-
-version_path = os.path.join(os.path.dirname(__file__), '..', 'VERSION')
-with open(version_path) as f:
-    __version__ = f.read().strip()
-
+__version__ = '0.8.4'
 __all__ = ['feature', 'nlptools', 'retools']
