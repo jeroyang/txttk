@@ -129,6 +129,10 @@ class RetoolsTestCase(unittest.TestCase):
         wanted = 'abc|d|ef'
         self.assertEqual(result, wanted)
 
+        result = retools.parallel([r'abc', r'defg'], sort=True)
+        wanted = 'defg|abc'
+        self.assertEqual(result, wanted)
+        
     def test_nocatch(self):
         regex = r'a|b'
         wanted = r'(?:a|b)'

@@ -156,18 +156,22 @@ def unpack(regex):
     else:
         return regex
 
-def parallel(regex_list):
+def parallel(regex_list, sort=False):
     """
     Join the given regexes using r'|'
-
+    if the sort=True, regexes will be sorted by lenth before processing
+    
     >>> parallel([r'abc', r'def'])
     'abc|def'
     >>> parallel([r'abc', r'd|ef'])
     'abc|def'
     >>> parallel([r'abc', r'(d|ef)'])
     'abc|d|ef'
+    >>> parallel([r'abc', r'defg'])
+    'defg|abc'
     """
-    
+    if sort:
+        regex_list = sorted(regex_list, key=len, reverse=True)
     return '|'.join([unpack(regex) for regex in regex_list])
 
 def nocatch(regex):
