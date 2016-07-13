@@ -11,17 +11,29 @@ Text Toolkit: txttk
 
 Text Toolkit: manipulate text & regular expression
 
+installation
+------------
+
+.. code:: bash
+
+    $ pip install txttk
+
+Usage
+-----
+
+To use txttk in a project:
+
+.. code:: python
+
+    from txttk import nlptools
+    from txttk import retools
+    from txttk import feature
+
 Features
 --------
 * nlptools: Nature Language Processing tools.
 * retools: Manipulate Regular Expression strings.
-
-Modules
---------
-
-.. toctree::
-	nlptools
-	retools
+* feature: Extract features from a given token
 
 License
 ---------

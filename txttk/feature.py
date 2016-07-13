@@ -12,6 +12,11 @@ import string
 def lexical(token):
     """
     Extract lexical features from given token
+    There are 3 kinds of lexical features, take 'Hello' as an example:
+
+    1. lowercase: 'hello'
+    2. first4: 'hell'
+    3. last4: 'ello'
     """
     lowercase = token.lower()
     first4 = lowercase[:4]
@@ -87,7 +92,21 @@ def _consists_digits_n_punctuations(token):
     
 def orthographic(token):
     """
-    Extract orthographic features from given token
+    Extract orthographic features from a given token
+    
+    There are 11 kinds of orthographic features, take 'Windows10' as an example:
+
+    1. shape: 'Aaaaaaa00'
+    2. length: 9
+    3. contains_a_letter: True
+    4. contains_a_capital: True
+    5. begins_with_capital: True
+    6. all_capital: False
+    7. contains_a_digit: True
+    8. all_digit: False
+    9. contains_a_punctuation: False
+    10. consists_letters_n_digits: True
+    11. consists_digits_n_punctuations: False
     """
 
     return OrderedDict([
