@@ -1,5 +1,5 @@
-nlptools: NLP tools
-===================
+nlptools
+========
 
 .. autofunction:: txttk.nlptools.sent_tokenize
 .. autofunction:: txttk.nlptools.sent_count
