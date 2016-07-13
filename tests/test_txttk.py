@@ -13,9 +13,7 @@ Tests for `txttk` module.
 """
 
 import unittest
-
-from txttk import txttk
-
+import txttk
 
 class TestTxttk(unittest.TestCase):
 
