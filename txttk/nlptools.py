@@ -37,7 +37,7 @@ def sent_tokenize(context):
     escaped_escaped_stem = escaped_stem.replace('{','{{').replace('}', '}}')
 
     # Find the linebreaks
-    sent_re = re.compile(r'([A-Z0-9]..+?(?:[.!?]\s|[\n$]))')
+    sent_re = re.compile(r'([A-Z0-9]..+?(?:[.!?]\s+|[\n$]+))')
     linebreaks = sent_re.findall(escaped_escaped_stem)
     sent_stem = sent_re.sub(r'\1###linebreak###', escaped_escaped_stem)
     recovered_sent_stem = sent_stem.replace('{{}}', '{}')
@@ -131,14 +131,14 @@ def count_start(tokenizer):
     """
     A decorator which wrap the given tokenizer to yield (token, start).
     Notice! the decorated tokenizer must take a int arguments stands for the start position of the input context/sentence
-    
+
     >>> tokenizer = lambda sentence: sentence.split(' ')
     >>> tokenizer('The quick brown fox jumps over the lazy dog')
     ['The', 'quick', 'brown', 'fox', 'jumps', 'over', 'the',
     'lazy', 'dog']
     >>> tokenizer = count_start(tokenizer)
     >>> tokenizer('The quick brown fox jumps over the lazy dog', 0)
-    
+
     ('The', 0)
     ('quick', 4)
     ...
@@ -150,6 +150,5 @@ def count_start(tokenizer):
             start = context.index(token, flag)
             flag = start + len(token)
             yield (token, base + start)
-    
+
     return wrapper
-    
