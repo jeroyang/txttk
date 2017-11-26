@@ -24,16 +24,18 @@ Usage
 To use txttk in a project:
 
 .. code:: python
-
+    from txttk import corpus
+    from txttk import feature
     from txttk import nlptools
     from txttk import retools
-    from txttk import feature
 
 Features
 --------
+* corpus: Handle the corpus, make random division for cross validation
+* feature: Extract features from a given token
 * nlptools: Nature Language Processing tools.
 * retools: Manipulate Regular Expression strings.
-* feature: Extract features from a given token
+
 
 License
 ---------

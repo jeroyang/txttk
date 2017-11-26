@@ -13,15 +13,17 @@ Tests for `txttk` module.
 """
 
 import unittest
-import txttk
 
 class TestTxttk(unittest.TestCase):
 
-    def setUp(self):
-        pass
+    def test_import_corpus(self):
+        from txttk import Corpus
 
-    def test_something(self):
-        pass
+    def test_import_feature(self):
+        from txttk import orthographic
 
-    def tearDown(self):
-        pass
+    def test_import_nlptools(self):
+        from txttk import powerset
+
+    def test_import_retools(self):
+        from txttk import condense

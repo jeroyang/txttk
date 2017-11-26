@@ -6,9 +6,11 @@ from __future__ import (absolute_import, division,
 from builtins import *
 
 import os
-from txttk import nlptools, retools, feature
+from txttk.corpus import *
+from txttk.feature import *
+from txttk.nlptools import *
+from txttk.retools import *
 
 __author__ = 'Chia-Jung, Yang'
 __email__ = 'jeroyang@gmail.com'
 __version__ = '0.8.7'
-__all__ = ['feature', 'nlptools', 'retools']
