@@ -8,9 +8,6 @@ from setuptools import setup
 with open('README.rst') as f:
     readme = f.read()
 
-with open('VERSION') as f:
-    version = f.read().strip()
-
 if sys.argv[-1] == 'publish':
     os.system("python setup.py sdist bdist_wheel upload")
     sys.exit()
@@ -25,7 +22,7 @@ test_requirements = [
 
 setup(
     name='txttk',
-    version=version,
+    version='0.9.0',
     description="Text Toolkit: manipulate text & regular expression",
     long_description=readme,
     author="Chia-Jung, Yang",
