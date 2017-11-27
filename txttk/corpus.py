@@ -135,7 +135,6 @@ class Annotation(set):
         with open(fp, 'w') as f:
             json.dump(self.sorted_results(), f)
 
-
 class Corpus(list):
     def __init__(self, title='', sentences=None):
         self.title = title

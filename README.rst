@@ -11,22 +11,25 @@ Text Toolkit: txttk
 
 Text Toolkit: manipulate text & regular expression
 
-installation
+Installation and Update
 ------------
 
 .. code:: bash
 
-    $ pip install txttk
+    $ pip install -U txttk
 
 Usage
 -----
 
-To use txttk in a project:
+Module *corpus*
+~~~~~~~~~~~~~~~
 
 .. code:: python
     from txttk import corpus
+
     from txttk import feature
     from txttk import nlptools
+    from txttk import report
     from txttk import retools
 
 Features
