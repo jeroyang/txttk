@@ -22,7 +22,7 @@ test_requirements = [
 
 setup(
     name='txttk',
-    version='0.10.4',
+    version='0.10.5',
     description="Text Toolkit: manipulate text & regular expression",
     long_description=readme,
     author="Chia-Jung, Yang",
