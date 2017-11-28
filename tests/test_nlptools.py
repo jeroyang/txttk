@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import (absolute_import, division,
-                        print_function, unicode_literals)
+                        print_function)
 from builtins import *
 
 import unittest
@@ -10,18 +10,16 @@ from txttk import nlptools
 
 class NlptoolsTestCase(unittest.TestCase):
     def setUp(self):
-        self.sentences = """A common problem faced by biocurators when using text mining systems is that these are difficult to use or do not provide an output that can be directly exploited by biocurators during their literature curation process. 
-In this respect, the BioCreative Interactive {Text Mining} (IAT) task has served as a great means to observe the approaches, standards and functionalities used by state-of-the-art text mining systems with potential applications in the biocuration domain. 
-The IAT task also provides a means for biocurators to be directly involved in the testing of text mining systems. 
-For the upcoming BioCreative V, seven teams have submitted a text mining/NLP system targeted to a specific biocuration task. 
+        self.sentences = """A common problem faced by biocurators when using text mining systems is that these are difficult to use or do not provide an output that can be directly exploited by biocurators during their literature curation process.
+In this respect, the BioCreative Interactive {Text Mining} (IAT) task has served as a great means to observe the approaches, standards and functionalities used by state-of-the-art text mining systems with potential applications in the biocuration domain.
+The IAT task also provides a means for biocurators to be directly involved in the testing of text mining systems.
+For the upcoming BioCreative V, seven teams have submitted a text mining/NLP system targeted to a specific biocuration task.
 These systems will be formally evaluated by users, but not competitively.""".split('\n')
-        self.context = "".join(self.sentences)
-
-    #def test_roundrobin(self):
-    #    self.assertEqual(list(nlptools.roundrobin('ABC', 'D', 'EF')), ['A', 'D', 'E', 'B', 'F', 'C'])
+        self.context = " ".join(self.sentences)
 
     def test_sent_tokenize(self):
-        self.assertEqual(nlptools.sent_tokenize(self.context), self.sentences)
+        result = [s.strip() for s in nlptools.sent_tokenize(self.context)]
+        self.assertEqual(result, self.sentences)
 
     def test_sent_tokenize_intergration(self):
         self.assertEqual(''.join(nlptools.sent_tokenize(self.context)), self.context)
@@ -32,7 +30,7 @@ These systems will be formally evaluated by users, but not competitively.""".spl
     def test_clause_tokenize(self):
         sentence = self.sentences[1]
         wanted = ['In this respect, the BioCreative Interactive {Text Mining} (IAT) task has served as a great means to observe the approaches,',
-                  ' standards and functionalities used by state-of-the-art text mining systems with potential applications in the biocuration domain. ']
+                  ' standards and functionalities used by state-of-the-art text mining systems with potential applications in the biocuration domain.']
         self.assertEqual(nlptools.clause_tokenize(sentence), wanted)
 
     def test_clause_tokenize_intergration(self):
@@ -42,7 +40,7 @@ These systems will be formally evaluated by users, but not competitively.""".spl
         sentence = 'A 2.1 cm tumor (right tongue) noted on 2013-11-11.'
         wanted = ['A', ' ', '2.1', ' ', 'cm', ' ', 'tumor', ' ', '(', 'right', ' ', 'tongue', ')', ' ', 'noted', ' ', 'on', ' ', '2013-11-11', '.']
         self.assertEqual(list(nlptools.word_tokenize(sentence)), wanted)
-    
+
     def test_word_tokenzie2(self):
         sentence = '-999 1,234,000 3.1415'
         wanted = ['-999', ' ', '1,234,000', ' ', '3.1415']
@@ -53,7 +51,6 @@ These systems will be formally evaluated by users, but not competitively.""".spl
           self.assertEqual(''.join(list(nlptools.word_tokenize(sent))), sent)
 
     def test_slim_stem(self):
-        """['ic', 'tic', 'e', 'ive', 'ing', 'ical', 'nal', 'al', 'ism', 'ion', 'ation', 'ar', 'sis', 'us', 'ment']"""
         word2target = [('magic', 'mag'),
                        ('automatic', 'automa'),
                        ('life', 'lif'),
@@ -97,7 +94,7 @@ These systems will be formally evaluated by users, but not competitively.""".spl
         result = [start for token, start in tokenizer(sentence, 0)]
         wanted = [0, 4, 10]
         self.assertEqual(result, wanted)
-        
+
         sentence = 'jumps over the'
         result = [start for token, start in tokenizer(sentence, 16)]
         wanted = [16, 22, 27]
