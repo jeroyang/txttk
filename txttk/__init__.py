@@ -14,4 +14,4 @@ from txttk.retools import *
 
 __author__ = 'Chia-Jung, Yang'
 __email__ = 'jeroyang@gmail.com'
-__version__ = '0.10.6'
+__version__ = '0.10.7'
