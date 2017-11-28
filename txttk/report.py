@@ -113,7 +113,7 @@ class Report:
 
     @classmethod
     def from_reports(cls, reports, title):
-        if len(reports) != len([rep.title for rep in reports]):
+        if len(reports) != len(set([rep.title for rep in reports])):
             raise KeyError('Cannt merge reports with same titles')
         meta_report = cls([], [], [], title)
         for report in reports:
