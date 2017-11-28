@@ -164,3 +164,43 @@ class Report:
                     ax.annotate(report.title, (report.precision(), report.recall()), fontsize=fontsize)
             else:
                 ax.scatter(self.precision(), self.recall())
+
+    def html_table(self, split_report=False):
+        html_template = """<table>
+<tr>
+    <th>Title</th>
+    <th>Ture Positive</th>
+    <th>False Positive</th>
+    <th>False Negative</th>
+    <th>Precision</th>
+    <th>Recall</th>
+    <th>F-measure</th>
+</tr>
+{}
+</table>"""
+        line_template = """<tr>
+    <th>{}</th>
+    <th>{}</th>
+    <th>{}</th>
+    <th>{}</th>
+    <th>{:.3f}</th>
+    <th>{:.3f}</th>
+    <th>{:.3f}</th>
+</tr>"""
+        lines = []
+        if split_report:
+            reports = self.split()
+        else:
+            reports = [self]
+        for report in reports:
+            line = line_template.format(report.title,
+                                        len(report.tp),
+                                        len(report.fp),
+                                        len(report.fn),
+                                        report.precision(),
+                                        report.recall(),
+                                        report.f1())
+            lines.append(line)
+
+        body = '\n'.join(lines)
+        return html_template.format(body)

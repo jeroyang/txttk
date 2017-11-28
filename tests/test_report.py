@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import (absolute_import, division,
-                        print_function) #, unicode_literals)
+                        print_function)
 from builtins import *
 
 """
@@ -86,3 +86,52 @@ class TestReport(unittest.TestCase):
     def test_from_scale(self):
         scale_report = report.Report.from_scale(gold_number=10, precision=0.7, recall=0.7, title='testing')
         self.assertEqual(str(scale_report), str(self.report))
+
+    def test_html_table(self):
+        wanted = r"""<table>
+<tr>
+    <th>Title</th>
+    <th>Ture Positive</th>
+    <th>False Positive</th>
+    <th>False Negative</th>
+    <th>Precision</th>
+    <th>Recall</th>
+    <th>F-measure</th>
+</tr>
+<tr>
+    <th>test1</th>
+    <th>3</th>
+    <th>1</th>
+    <th>1</th>
+    <th>0.750</th>
+    <th>0.750</th>
+    <th>0.750</th>
+</tr>
+<tr>
+    <th>test2</th>
+    <th>2</th>
+    <th>1</th>
+    <th>1</th>
+    <th>0.667</th>
+    <th>0.667</th>
+    <th>0.667</th>
+</tr>
+<tr>
+    <th>test3</th>
+    <th>2</th>
+    <th>1</th>
+    <th>1</th>
+    <th>0.667</th>
+    <th>0.667</th>
+    <th>0.667</th>
+</tr>
+</table>"""
+
+        reports = [
+            report.Report([1, 2, 3], [-2], [8], 'test1'),
+            report.Report([4, 5], [-1], [9], 'test2'),
+            report.Report([6, 7], [0], [10], 'test3'),
+        ]
+        meta_report = report.Report.from_reports(reports, 'testing')
+        result = meta_report.html_table(split_report=True)
+        self.assertEqual(result, wanted)
