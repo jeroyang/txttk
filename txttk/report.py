@@ -4,7 +4,7 @@
 from __future__ import (absolute_import, division,
                         print_function, unicode_literals)
 from builtins import *
-from collections import defaultdict, namedtuple
+from collections import OrderedDict, namedtuple
 from fractions import Fraction
 from contextlib import contextmanager
 
@@ -123,14 +123,14 @@ class Report:
         return meta_report
 
     def split(self):
-        tag2report = defaultdict(Report)
+        tag2report = OrderedDict()
         try:
             for tagbox, _ in self.tp:
-                tag2report[tagbox.tag].tp.append(tagbox.content)
+                tag2report.setdefault(tagbox.tag, Report()).tp.append(tagbox.content)
             for tagbox, _ in self.fp:
-                tag2report[tagbox.tag].fp.append(tagbox.content)
+                tag2report.setdefault(tagbox.tag, Report()).fp.append(tagbox.content)
             for tagbox, _ in self.fn:
-                tag2report[tagbox.tag].fn.append(tagbox.content)
+                tag2report.setdefault(tagbox.tag, Report()).fn.append(tagbox.content)
             for tag, report in tag2report.items():
                 report.title = tag
         except AttributeError:
