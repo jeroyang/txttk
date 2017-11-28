@@ -66,8 +66,8 @@ class TestReport(unittest.TestCase):
         ]
         meta_report = report.Report.from_reports(reports, 'testing')
         results = meta_report.split()
-        result_surfaces = {str(result) for result in results}
-        wanted_surfaces = {str(result) for result in reports}
+        result_surfaces = sorted([str(result) for result in results])
+        wanted_surfaces = sorted([str(result) for result in reports])
         self.assertEqual(result_surfaces, wanted_surfaces)
 
     def test_split_error(self):
