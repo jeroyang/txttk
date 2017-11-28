@@ -57,18 +57,10 @@ class TestReport(unittest.TestCase):
         meta_report = report.Report.from_reports(reports, 'testing')
         self.assertEqual(str(meta_report), str(self.report))
 
-    def test_from_reports_error(self):
-            reports = [
-                report.Report([1, 2, 3], [-2], [8], 'test1'),
-                report.Report([4, 5], [-1], [9], 'test1'),
-                report.Report([6, 7], [0], [10], 'test3'),
-            ]
-            with self.assertRaises(KeyError):
-                meta_report = report.Report.from_reports(reports, 'testing')
-
     def test_split(self):
         reports = [
             report.Report([1, 2, 3], [-2], [8], 'test1'),
+            report.Report([4, 5], [-1], [9], 'test2'),
             report.Report([4, 5], [-1], [9], 'test2'),
             report.Report([6, 7], [0], [10], 'test3'),
         ]

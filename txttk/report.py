@@ -31,9 +31,9 @@ class Report:
         fn: the false negative items
         title: the title of this report
         """
-        self.tp = pack_boxes(tp, title)
-        self.fp = pack_boxes(fp, title)
-        self.fn = pack_boxes(fn, title)
+        self.tp = pack_boxes(tp, (0, title))
+        self.fp = pack_boxes(fp, (0, title))
+        self.fn = pack_boxes(fn, (0, title))
         self.title = title
 
     def precision(self):
@@ -65,30 +65,27 @@ class Report:
 
     @classmethod
     def from_reports(cls, reports, title):
-        if len(reports) != len(set([report.title for report in reports])):
-            raise KeyError('Duplication of report titles')
-
         meta_report = cls([], [], [], title)
-        for report in reports:
-            meta_report.tp.extend(pack_boxes(report.tp, title))
-            meta_report.fp.extend(pack_boxes(report.fp, title))
-            meta_report.fn.extend(pack_boxes(report.fn, title))
+        for i, report in enumerate(reports):
+            meta_report.tp.extend(pack_boxes(report.tp, (i, title)))
+            meta_report.fp.extend(pack_boxes(report.fp, (i, title)))
+            meta_report.fn.extend(pack_boxes(report.fn, (i, title)))
         return meta_report
 
     def split(self):
-        title2report = defaultdict(Report)
+        tag2report = defaultdict(Report)
         try:
             for tagbox, _ in self.tp:
-                title2report[tagbox.tag].tp.append(tagbox.content)
+                tag2report[tagbox.tag].tp.append(tagbox.content)
             for tagbox, _ in self.fp:
-                title2report[tagbox.tag].fp.append(tagbox.content)
+                tag2report[tagbox.tag].fp.append(tagbox.content)
             for tagbox, _ in self.fn:
-                title2report[tagbox.tag].fn.append(tagbox.content)
-            for title, report in title2report.items():
-                report.title = title
+                tag2report[tagbox.tag].fn.append(tagbox.content)
+            for tag, report in tag2report.items():
+                report.title = tag[1]
         except AttributeError:
             raise AssertionError('The report cannot be split')
-        return list(title2report.values())
+        return list(tag2report.values())
 
     @classmethod
     def from_scale(cls, gold_number, precision, recall, title):
