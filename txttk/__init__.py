@@ -9,6 +9,7 @@ import os
 from txttk.corpus import *
 from txttk.feature import *
 from txttk.nlptools import *
+from txttk.report import *
 from txttk.retools import *
 
 __author__ = 'Chia-Jung, Yang'
