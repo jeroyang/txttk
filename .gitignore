@@ -3,6 +3,7 @@
 
 #ipython
 .ipynb_checkpoints
+*.ipynb
 
 # OSX
 .DS_Store
