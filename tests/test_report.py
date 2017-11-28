@@ -61,7 +61,6 @@ class TestReport(unittest.TestCase):
         reports = [
             report.Report([1, 2, 3], [-2], [8], 'test1'),
             report.Report([4, 5], [-1], [9], 'test2'),
-            report.Report([4, 5], [-1], [9], 'test2'),
             report.Report([6, 7], [0], [10], 'test3'),
         ]
         meta_report = report.Report.from_reports(reports, 'testing')

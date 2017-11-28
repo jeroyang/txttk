@@ -31,9 +31,9 @@ class Report:
         fn: the false negative items
         title: the title of this report
         """
-        self.tp = pack_boxes(tp, (0, title))
-        self.fp = pack_boxes(fp, (0, title))
-        self.fn = pack_boxes(fn, (0, title))
+        self.tp = pack_boxes(tp, title)
+        self.fp = pack_boxes(fp, title)
+        self.fn = pack_boxes(fn, title)
         self.title = title
 
     def precision(self):
@@ -65,11 +65,13 @@ class Report:
 
     @classmethod
     def from_reports(cls, reports, title):
+        if len(reports) != len([rep.title for rep in reports]):
+            raise KeyError('Cannt merge reports with same titles')
         meta_report = cls([], [], [], title)
-        for i, report in enumerate(reports):
-            meta_report.tp.extend(pack_boxes(report.tp, (i, title)))
-            meta_report.fp.extend(pack_boxes(report.fp, (i, title)))
-            meta_report.fn.extend(pack_boxes(report.fn, (i, title)))
+        for report in reports:
+            meta_report.tp.extend(pack_boxes(report.tp, title))
+            meta_report.fp.extend(pack_boxes(report.fp, title))
+            meta_report.fn.extend(pack_boxes(report.fn, title))
         return meta_report
 
     def split(self):
@@ -82,7 +84,7 @@ class Report:
             for tagbox, _ in self.fn:
                 tag2report[tagbox.tag].fn.append(tagbox.content)
             for tag, report in tag2report.items():
-                report.title = tag[1]
+                report.title = tag
         except AttributeError:
             raise AssertionError('The report cannot be split')
         return list(tag2report.values())
