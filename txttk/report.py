@@ -65,6 +65,9 @@ class Report:
 
     @classmethod
     def from_reports(cls, reports, title):
+        if len(reports) != len(set([report.title for report in reports])):
+            raise KeyError('Duplication of report titles')
+
         meta_report = cls([], [], [], title)
         for report in reports:
             meta_report.tp.extend(pack_boxes(report.tp, title))
