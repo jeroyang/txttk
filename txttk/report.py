@@ -21,7 +21,7 @@ def get_denominator(ratio, max_numerator):
     return get_numerator(1/ratio, max_numerator)
 
 @contextmanager
-def prplot(ax=None, size=6):
+def prplot(**argkw):
     import matplotlib.pyplot as plt
     import numpy as np
 
@@ -29,7 +29,10 @@ def prplot(ax=None, size=6):
         r = f * p / (2 * p - f)
         r[r<0] = np.NAN
         return r
-    if ax is None:
+    size = argkw.get('size', 6)
+    if 'ax' in argkw:
+        ax = argkw['ax']
+    else:
         fig, ax = plt.subplots(figsize=(size, size))
     ttl = ax.title
     ttl.set_position([.5, 1.05])
@@ -37,7 +40,7 @@ def prplot(ax=None, size=6):
     for f in np.arange(0.1, 1, 0.1):
         p = np.arange(-1, 1.0, 0.00001)
         r = formula(p,f)
-        ax.plot(p, r, color='lightgray', linewidth=1)
+        ax.plot(p, r, color='lightgray', linewidth=1, zorder=-100)
         ax.annotate('  F={:.1f}'.format(f),
                     xy=(1-0.001, formula(np.array([1-0.001]), f)),
                     fontsize=size*1.7,
@@ -47,7 +50,7 @@ def prplot(ax=None, size=6):
     yticks = ax.yaxis.get_major_ticks()
     yticks[0].set_visible(False)
 
-    ax.grid(True)
+    ax.grid(True, zorder=-99)
     gridlines = ax.get_xgridlines() + ax.get_ygridlines()
     ticklabels = ax.get_xticklabels() + ax.get_yticklabels()
     for line in gridlines[1:]:
@@ -160,8 +163,8 @@ class Report:
                 max_goldnum = max([len(report.tp)+len(report.fn) for report in reports])
                 for report in self.split():
                     ax.scatter(report.precision(), report.recall(),
-                               s=100.0*(len(report.tp)+len(report.fn))/max_goldnum*size)
-                    ax.annotate(report.title, (report.precision(), report.recall()), fontsize=fontsize)
+                               s=100.0*(len(report.tp)+len(report.fn))/max_goldnum*size, zorder=10)
+                    ax.annotate(report.title, (report.precision(), report.recall()), fontsize=fontsize, zorder=11)
             else:
                 ax.scatter(self.precision(), self.recall())
 
