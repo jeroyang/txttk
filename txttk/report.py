@@ -114,16 +114,22 @@ class Report:
         syntax = 'Report<P{p:.3f} R{r:.3f} F{f:.3f} {t!r}>'
         return syntax.format(p=p, r=r, f=f, t=self.title)
 
+    def update(self, report):
+        """
+        Add the items from the given report.
+        """
+        self.tp.extend(pack_boxes(report.tp, self.title))
+        self.fp.extend(pack_boxes(report.fp, self.title))
+        self.fn.extend(pack_boxes(report.fn, self.title))
+
     @classmethod
     def from_reports(cls, reports, title):
         if len(reports) != len(set([rep.title for rep in reports])):
             raise KeyError('Cannt merge reports with same titles')
-        meta_report = cls([], [], [], title)
+        metareport = cls([], [], [], title)
         for report in reports:
-            meta_report.tp.extend(pack_boxes(report.tp, title))
-            meta_report.fp.extend(pack_boxes(report.fp, title))
-            meta_report.fn.extend(pack_boxes(report.fn, title))
-        return meta_report
+            metareport.update(report)
+        return metareport
 
     def split(self):
         tag2report = OrderedDict()

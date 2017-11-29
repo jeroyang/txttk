@@ -44,9 +44,16 @@ class TestReport(unittest.TestCase):
         wanted = 7/10
         self.assertEqual(f1, wanted)
 
-    def test_str(self):
+    def test_repr(self):
         wanted = "Report<P0.700 R0.700 F0.700 'testing'>"
-        self.assertEqual(str(self.report), wanted )
+        self.assertEqual(repr(self.report), wanted )
+
+    def test_update(self):
+        metareport = report.Report([], [], [], 'testing')
+        metareport.update(report.Report([1, 2, 3], [-2], [8], 'test1'))
+        metareport.update(report.Report([4, 5], [-1], [9], 'test2'))
+        metareport.update(report.Report([6, 7], [0], [10], 'test3'))
+        self.assertEqual(str(metareport), str(self.report))
 
     def test_from_reports(self):
         reports = [
@@ -54,8 +61,8 @@ class TestReport(unittest.TestCase):
             report.Report([4, 5], [-1], [9], 'test2'),
             report.Report([6, 7], [0], [10], 'test3'),
         ]
-        meta_report = report.Report.from_reports(reports, 'testing')
-        self.assertEqual(str(meta_report), str(self.report))
+        metareport = report.Report.from_reports(reports, 'testing')
+        self.assertEqual(str(metareport), str(self.report))
 
     def test_from_reports_error(self):
         reports = [
@@ -64,7 +71,7 @@ class TestReport(unittest.TestCase):
             report.Report([6, 7], [0], [10], 'test3'),
         ]
         with self.assertRaises(KeyError):
-            meta_report = report.Report.from_reports(reports, 'testing')
+            metareport = report.Report.from_reports(reports, 'testing')
 
     def test_split(self):
         reports = [
@@ -72,8 +79,8 @@ class TestReport(unittest.TestCase):
             report.Report([4, 5], [-1], [9], 'test2'),
             report.Report([6, 7], [0], [10], 'test3'),
         ]
-        meta_report = report.Report.from_reports(reports, 'testing')
-        results = meta_report.split()
+        metareport = report.Report.from_reports(reports, 'testing')
+        results = metareport.split()
         result_surfaces = [str(result) for result in results]
         wanted_surfaces = [str(result) for result in reports]
         self.assertEqual(result_surfaces, wanted_surfaces)
@@ -132,6 +139,6 @@ class TestReport(unittest.TestCase):
             report.Report([4, 5], [-1], [9], 'test2'),
             report.Report([6, 7], [0], [10], 'test3'),
         ]
-        meta_report = report.Report.from_reports(reports, 'testing')
-        result = meta_report.html_table(split_report=True)
+        metareport = report.Report.from_reports(reports, 'testing')
+        result = metareport.html_table(split_report=True)
         self.assertEqual(result, wanted)
