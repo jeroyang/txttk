@@ -148,6 +148,10 @@ class Report:
 
     @classmethod
     def from_scale(cls, gold_number, precision, recall, title):
+        """
+        deprecated, for backward compactbility
+        try to use from_score
+        """
         tp_count = get_numerator(recall, gold_number)
         positive_count = get_denominator(precision, tp_count)
         fp_count = positive_count - tp_count
@@ -157,6 +161,18 @@ class Report:
                            ['fn'] * fn_count,
                            title)
         return scale_report
+
+    @classmethod
+    def from_score(cls, precision, recall, title, goldstandard_size=1000):
+        tp_count = get_numerator(recall, goldstandard_size)
+        positive_count = get_denominator(precision, tp_count)
+        fp_count = positive_count - tp_count
+        fn_count = goldstandard_size - tp_count
+        score_report = cls(['tp'] * tp_count,
+                           ['fp'] * fp_count,
+                           ['fn'] * fn_count,
+                           title)
+        return score_report
 
     def plot(self, split_report=False, **argkw):
 

@@ -94,6 +94,10 @@ class TestReport(unittest.TestCase):
         scale_report = report.Report.from_scale(gold_number=10, precision=0.7, recall=0.7, title='testing')
         self.assertEqual(str(scale_report), str(self.report))
 
+    def test_from_score(self):
+        score_report = report.Report.from_score(precision=0.7, recall=0.7, title='testing')
+        self.assertEqual(str(score_report), str(self.report))
+
     def test_html_table(self):
         wanted = r"""<table>
 <tr>
